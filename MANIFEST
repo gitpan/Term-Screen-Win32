@@ -1,0 +1,6 @@
+Changes
+Makefile.PL
+MANIFEST
+README
+t/Term-Screen-Win32.t
+lib/Term/Screen/Win32.pm

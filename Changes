@@ -1,0 +1,6 @@
+Revision history for Perl extension Term::Screen::Win32.
+
+0.01  Sat Mar 25 00:09:35 2006
+	- original version; created by h2xs 1.23 with options
+		-AXcfn Term::Screen::Win32
+
