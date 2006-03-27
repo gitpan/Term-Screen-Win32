@@ -1,4 +1,4 @@
-Term-Screen-Win32 version 0.01
+Term-Screen-Win32 version 0.02
 ============================
 
 Simple Term::Screen style interface to the Win32::Console::ANSI capabilities

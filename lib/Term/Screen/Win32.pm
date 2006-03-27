@@ -29,7 +29,7 @@ our @EXPORT = qw(
 	
 );
 
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
 
 # Preloaded methods go here.
@@ -59,18 +59,18 @@ sub resize
 	return (Win32::Console::ANSI::XYMax())[0, 1];
 	};
 
-sub normal      { print "\e[0m"; };
-sub bold        { print "\e[1m"; };
-sub reverse     { print "\e[7m"; };
-sub clrscr      { return Cls(); };
-sub clreol      { print "\e[0K"; };
-sub clreos      { print "\e[1J"; };
-sub il          { print "\e[".(defined($_[1]) ? $_[1] : 1).'L'; };
-sub dl          { print "\e[".(defined($_[1]) ? $_[1] : 1).'M'; };
+sub normal      { print "\e[0m"; return $_[0]; };
+sub bold        { print "\e[1m"; return $_[0]; };
+sub reverse     { print "\e[7m"; return $_[0]; };
+sub clrscr      { Cls();         return $_[0]; };
+sub clreol      { print "\e[0K"; return $_[0]; };
+sub clreos      { print "\e[1J"; return $_[0]; };
+sub il          { print "\e[".(defined($_[1]) ? $_[1] : 1).'L'; return $_[0]; };
+sub dl          { print "\e[".(defined($_[1]) ? $_[1] : 1).'M'; return $_[0]; };
 sub ic_exists   { return 1; };
-sub ic          { print "\e[".(defined($_[1]) ? $_[1] : 1).'\@'; };
+sub ic          { print "\e[".(defined($_[1]) ? $_[1] : 1).'\@'; return $_[0]; };
 sub dc_exists   { return 1; };
-sub dc          { print "\e[".(defined($_[1]) ? $_[1] : 1).'P'; };
+sub dc          { print "\e[".(defined($_[1]) ? $_[1] : 1).'P'; return $_[0]; };
 sub puts        { my $this = shift; print(@_); return $this; };
 
 sub getch
@@ -115,16 +115,16 @@ sub key_pressed
 	};
 
 sub echo
-	{ $_[0]->{'console'}->Mode($_[0]->{'console'}->Mode() | ENABLE_ECHO_INPUT); };
+	{ $_[0]->{'console'}->Mode($_[0]->{'console'}->Mode() | ENABLE_ECHO_INPUT); return $_[0]; };
 
 sub noecho
-	{ $_[0]->{'console'}->Mode($_[0]->{'console'}->Mode() & (0xFFFF xor ENABLE_ECHO_INPUT)); };
+	{ $_[0]->{'console'}->Mode($_[0]->{'console'}->Mode() & (0xFFFF xor ENABLE_ECHO_INPUT)); return $_[0]; };
 
 sub flush_input
-	{ while(key_pressed($_[0])) { getch($_[0]); }; };
+	{ while(key_pressed($_[0])) { getch($_[0]); }; return $_[0]; };
 
 sub stuff_input
-	{ push(@{(shift(@_))->{'key_pressed'}}, @_); };
+	{ push(@{(shift(@_))->{'key_pressed'}}, @_); return $_[0]; };
 
 my %def_key = ( 16 => 'shift',
                 17 => 'ctrl',
@@ -172,6 +172,7 @@ sub new($%)
 
     $self->{'origMode'} = $self->{'console'}->Mode();
     $self->{'console'}->Mode(ENABLE_PROCESSED_INPUT);
+    at($self, 0, 0);
 
     %{$self->{'def_key'}} = %def_key;
 
@@ -193,7 +194,7 @@ __END__
 
 Term::Screen::Win32 - Simple L<Term::Screen> style interface to the L<Win32::Console> (and L<Win32::Console::ANSI>) capabilities
 
-I<Version 0.01>
+I<Version 0.02>
 
 =head1 SYNOPSIS
 
