@@ -5,6 +5,7 @@ use ExtUtils::MakeMaker;
 my $PreReq = {'Win32::Console::ANSI' => 1.00,
               'Carp'                 => 0,
               'Win32::Console'       => 0.191,
+              'Tie::Hash'            => 0,
              };
 
 WriteMakefile(

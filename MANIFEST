@@ -2,5 +2,5 @@ Changes
 Makefile.PL
 MANIFEST
 README
-t/Term-Screen-Win32.t
+test.pl
 lib/Term/Screen/Win32.pm
